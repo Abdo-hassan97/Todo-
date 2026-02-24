@@ -1,0 +1,39 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Design homepage",
+      "description": "Include hero section",
+      "column": "done",
+      "priority": "high"
+    },
+    {
+      "id": "3",
+      "title": "Implement login UI",
+      "description": "Add authentication screen",
+      "column": "backlog",
+      "priority": "medium"
+    },
+    {
+      "id": "4",
+      "title": "Fix navbar responsiveness",
+      "description": "Mobile menu dropdown",
+      "column": "done",
+      "priority": "high"
+    },
+    {
+      "id": "5",
+      "title": "Deploy staging version",
+      "description": "Prepare CI pipeline",
+      "column": "in_progress",
+      "priority": "high"
+    },
+    {
+      "id": "0308",
+      "title": "Create to do list ",
+      "description": "Create to do list ",
+      "priority": "medium",
+      "column": "review"
+    }
+  ]
+}
