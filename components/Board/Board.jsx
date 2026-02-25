@@ -17,55 +17,67 @@ const columns = ["backlog", "in_progress", "review", "done"];
 
 export default function Board() {
   const queryClient = useQueryClient();
-
-  // Store task being dragged to show preview overlay
   const [activeTask, setActiveTask] = useState(null);
 
-  // Configure drag sensor
-  // distance constraint prevents accidental drag when clicking
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 8 },
     })
   );
 
-  // Mutation for updating task column when drag ends
+  /**
+   * 🔥 Optimistic Mutation
+   */
   const mutation = useMutation({
     mutationFn: ({ id, column }) => updateTask(id, { column }),
 
-    // Optimistic update preparation (currently only storing previous data)
-    onMutate: async () => {
+    onMutate: async ({ id, column }) => {
       await queryClient.cancelQueries({ queryKey: ["tasks"] });
 
-      // Save previous tasks state in case rollback is needed
-      const previousTasks = queryClient.getQueryData(["tasks"]);
+      const previousQueries = queryClient.getQueriesData({
+        queryKey: ["tasks"],
+      });
 
-      return { previousTasks };
+      // Optimistically update every cached page
+      previousQueries.forEach(([queryKey, data]) => {
+        if (!data?.tasks) return;
+
+        const updatedTasks = data.tasks.map((task) =>
+          task.id === id ? { ...task, column } : task
+        );
+
+        queryClient.setQueryData(queryKey, {
+          ...data,
+          tasks: updatedTasks,
+        });
+      });
+
+      return { previousQueries };
     },
 
-    // Refresh tasks after mutation finishes (success or error)
+    onError: (err, variables, context) => {
+      // Rollback if request fails
+      context?.previousQueries.forEach(([queryKey, data]) => {
+        queryClient.setQueryData(queryKey, data);
+      });
+    },
+
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
   });
 
-  // Triggered when drag starts
   const handleDragStart = (event) => {
-    // Store dragged task data for overlay preview
     setActiveTask(event.active.data.current?.task || null);
   };
 
-  // Triggered when drag ends
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
-    // Clear overlay preview
     setActiveTask(null);
 
-    // If dropped outside any column → ignore
     if (!over) return;
+    if (active.data.current.task.column === over.id) return;
 
-    // Update task column in backend
     mutation.mutate({
       id: active.id,
       column: over.id,
@@ -79,14 +91,12 @@ export default function Board() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      {/* Board container */}
       <div className={styles.board}>
         {columns.map((col) => (
           <Column key={col} column={col} />
         ))}
       </div>
 
-      {/* Drag preview overlay */}
       <DragOverlay>
         {activeTask ? (
           <div style={{ width: "280px", opacity: 0.8 }}>

@@ -11,14 +11,14 @@
       "id": "4",
       "title": "Fix navbar responsiveness",
       "description": "Mobile menu dropdown",
-      "column": "done",
-      "priority": "high"
+      "column": "backlog",
+      "priority": "medium"
     },
     {
       "id": "5",
       "title": "Deploy staging version",
       "description": "Prepare CI pipeline",
-      "column": "review",
+      "column": "in_progress",
       "priority": "high"
     },
     {
@@ -26,14 +26,7 @@
       "title": "Create to do list ",
       "description": "Create to do list ",
       "priority": "medium",
-      "column": "in_progress"
-    },
-    {
-      "id": "86fe",
-      "title": "اه",
-      "description": "",
-      "priority": "medium",
-      "column": "backlog"
+      "column": "review"
     }
   ]
 }
