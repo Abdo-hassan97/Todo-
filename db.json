@@ -8,13 +8,6 @@
       "priority": "high"
     },
     {
-      "id": "3",
-      "title": "Implement login UI",
-      "description": "Add authentication screen",
-      "column": "backlog",
-      "priority": "medium"
-    },
-    {
       "id": "4",
       "title": "Fix navbar responsiveness",
       "description": "Mobile menu dropdown",
@@ -25,7 +18,7 @@
       "id": "5",
       "title": "Deploy staging version",
       "description": "Prepare CI pipeline",
-      "column": "in_progress",
+      "column": "review",
       "priority": "high"
     },
     {
@@ -33,7 +26,14 @@
       "title": "Create to do list ",
       "description": "Create to do list ",
       "priority": "medium",
-      "column": "review"
+      "column": "in_progress"
+    },
+    {
+      "id": "86fe",
+      "title": "اه",
+      "description": "",
+      "priority": "medium",
+      "column": "backlog"
     }
   ]
 }

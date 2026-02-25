@@ -97,50 +97,47 @@ export default function Column({ column }) {
       </div>
 
       {/* Tasks list */}
-      <div className={styles.tasksContainer} style={{ flexGrow: 1 }}>
-        {tasks.length > 0 ? (
-          <>
-            {/* Render task cards */}
-            {tasks.map((task) => (
-              <TaskCard key={task.id} task={task} />
-            ))}
+<div className={styles.tasksContainer} style={{ flexGrow: 1 }}>
+  {tasks.length > 0 ? (
+    tasks.map((task) => (
+      <TaskCard key={task.id} task={task} />
+    ))
+  ) : (
+    <div
+      style={{
+        padding: "20px",
+        textAlign: "center",
+        color: "#888",
+        border: "1px dashed #ccc",
+        borderRadius: "8px",
+      }}
+    >
+      No tasks found
+    </div>
+  )}
 
-            {/* Add task button */}
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => setModalOpen(true)}
-              sx={{
-                marginTop: 2,
-                width: "100%",
-                backgroundColor: "transparent",
-                color: "inherit",
-                border: "1px solid #ccc",
-                boxShadow: "none",
-                "&:hover": {
-                  backgroundColor: "rgba(0,0,0,0.05)",
-                  boxShadow: "none",
-                },
-              }}
-            >
-              + Add Task
-            </Button>
-          </>
-        ) : (
-          // Empty state UI
-          <div
-            style={{
-              padding: "20px",
-              textAlign: "center",
-              color: "#888",
-              border: "1px dashed #ccc",
-              borderRadius: "8px",
-            }}
-          >
-            No tasks found
-          </div>
-        )}
-      </div>
+  {/* Add task button - always visible */}
+  <Button
+    variant="contained"
+    size="small"
+    onClick={() => setModalOpen(true)}
+    sx={{
+      marginTop: 2,
+      width: "100%",
+      backgroundColor: "transparent",
+      color: "inherit",
+      border: "1px solid #ccc",
+      boxShadow: "none",
+      "&:hover": {
+        backgroundColor: "rgba(0,0,0,0.05)",
+        boxShadow: "none",
+      },
+    }}
+  >
+    + Add Task
+  </Button>
+</div>
+
 
       {/* Pagination controls */}
       <div
